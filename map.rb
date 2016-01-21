@@ -6,20 +6,21 @@ class GameWindow < Gosu::Window
     super 640, 480
     self.caption = "Rogue"
     #raw_map = File.readlines("media/map.txt").map {|lines| lines.split("\n")}
+   # puts raw_map
     @map_array = []
-      x_y = 0
-    10.times do
-      @map_array << Map.new(x_y, 0)
+    x_y = 100
+    20.times do
+      @map_array << Map.new(x_y, 100)
       x_y += 20
     end
 =begin
     raw_map.each_with_index do |value0, index0|
       value0.each_with_index do |value1, index1|
-        @map_array << Map.new((index1 * 20), (index0 * 20), value1)
+        @map_array << Map.new((index1 * 20), (index0 * 20)) 
       end
     end
-=end
     @map_array.each {|item| puts "X => #{item.x} Y => #{item.y}"}
+=end
   end
 
   def update
