@@ -5,8 +5,9 @@ class GameWindow < Gosu::Window
   def initialize
     super 640, 480
     self.caption = "Rogue"
-    raw_map = File.readlines("media/map.txt").map {|lines| lines.split("\n")}
-   # puts raw_map
+    raw_map = File.readlines("media/map.txt").map {|lines| lines.chomp.split(//)}
+   puts raw_map
+   # puts raw_ma"p
     @map_array = []
     raw_map.each_with_index do |value0, index0|
       value0.each_with_index do |value1, index1|
@@ -15,6 +16,8 @@ class GameWindow < Gosu::Window
         end
       end
     end
+  puts @map_array
+
   end
 
   def update
