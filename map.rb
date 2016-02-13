@@ -19,7 +19,7 @@ class GameWindow < Gosu::Window
   end
 
   def update
-    @player.y -= 20
+    @player.y -= 20 unless @map.solid?(@player.x, @player.y -20)
     sleep 1
   end
 
@@ -40,6 +40,14 @@ class Map
     @y = y
     @icon = icon
     @tile = Gosu::Image.new("media/wall.png")
+  end
+
+  def solid?(x, y)
+    if (@x/20 == x/20 && @y/20 == y/20)
+      return true
+    else
+      return false
+    end
   end
 
   def draw
