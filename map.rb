@@ -45,5 +45,14 @@ class Map
   end
 end
 
+class Player
+  def initialize
+
+  end
+
+  def draw
+
+  end
+end
 window = GameWindow.new
 window.show
