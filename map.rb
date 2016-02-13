@@ -6,17 +6,15 @@ class GameWindow < Gosu::Window
     super 640, 480
     self.caption = "Rogue"
     raw_map = File.readlines("media/map.txt").map {|lines| lines.chomp.split(//)}
-   puts raw_map
-   # puts raw_ma"p
     @map_array = []
     raw_map.each_with_index do |value0, index0|
       value0.each_with_index do |value1, index1|
         if value1 == "#"
-          @map_array << Map.new((index1 * 20), (index0 * 20)) 
+          @map_array << Map.new((index1 * 20), (index0 * 20))
         end
       end
     end
-  puts @map_array
+    @player = Player.new(400, 400)
 
   end
 
@@ -27,6 +25,7 @@ class GameWindow < Gosu::Window
     @map_array.each do |item|
       item.draw
     end
+    @player.draw
   end
 
 end
@@ -46,12 +45,15 @@ class Map
 end
 
 class Player
-  def initialize
-
+  attr_accessor :x, :y
+  def initialize(x, y)
+    @image = Gosu::Font.new(20)
+    @x = x
+    @y = y
   end
 
   def draw
-
+    @image.draw("@", @x, @y, FONT_COLOR)
   end
 end
 window = GameWindow.new
