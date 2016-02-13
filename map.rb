@@ -14,12 +14,15 @@ class GameWindow < Gosu::Window
         end
       end
     end
-    @player = Player.new(400, 400)
+    @player = Player.new(400, 340)
 
   end
 
   def update
+    @player.y -= 20
+    sleep 1
   end
+
 
   def draw
     @map_array.each do |item|
