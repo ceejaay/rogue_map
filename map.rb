@@ -19,16 +19,30 @@ class GameWindow < Gosu::Window
   end
 
   def update
-    @player.y -= 20 unless @map.solid?(@player.x, @player.y -20)
-    sleep 1
+    @map_array.each do |item|
+      #something goes in here to work.
+    end
   end
-
 
   def draw
     @map_array.each do |item|
       item.draw
     end
     @player.draw
+  end
+
+  def button_down(id)
+    case id
+      when Gosu::KbUp
+        @player.up
+      when Gosu::KbDown
+        @player.down
+      when Gosu::KbLeft
+        @player.west
+      when Gosu::KbRight
+        @player.east
+    end
+
   end
 
 end
@@ -61,6 +75,22 @@ class Player
     @image = Gosu::Font.new(20)
     @x = x
     @y = y
+  end
+
+  def up
+    @y -= 20.0
+  end
+
+  def east
+    @x += 20.0
+  end
+
+  def west
+    @x -= 20.0
+  end
+
+  def down
+    @y += 20.0
   end
 
   def draw
