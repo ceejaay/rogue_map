@@ -14,7 +14,7 @@ class GameWindow < Gosu::Window
         end
       end
     end
-    @player = Player.new(400, 340)
+    @player = Player.new(0, 0)
     @tru_false = Gosu::Font.new(20)
   end
 
