@@ -31,8 +31,8 @@ class GameWindow < Gosu::Window
       item.draw
     end
     @player.draw
-    @tru_false.draw(@message, 10, 30, FONT_COLOR)
-    @tru_false.draw("Player x => #{@player.x} Player Y => #{@player.y}", 10, 60, FONT_COLOR)
+    #@tru_false.draw(@message, 10, 30, FONT_COLOR)
+    #@tru_false.draw("Player x => #{@player.x} Player Y => #{@player.y}", 10, 60, FONT_COLOR)
   end
 
   def button_down(id)
