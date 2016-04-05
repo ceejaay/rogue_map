@@ -16,14 +16,9 @@ class GameWindow < Gosu::Window
     end
     @player = Player.new(400, 340)
     @tru_false = Gosu::Font.new(20)
-    @message = ""
-    @map_array.each {|item| puts "Item X => #{item.x} Item Y => #{item.y}"}
-
   end
 
   def update
-    @message = nil
-    @map_array.each {|item| @message = true if item.solid?(@player.x, @player.y)}
   end
 
   def draw
@@ -66,6 +61,14 @@ class Map
 
   def solid?(x, y)
     if (@x/20 == x/20 && @y/20 == y/20)
+      return true
+    elsif x + 20 == 660
+      return true
+    elsif x - 20 == -40
+      return true
+    elsif y - 20 == -40
+      return true
+    elsif y + 20 == 500
       return true
     else
       return false
