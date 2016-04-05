@@ -15,13 +15,15 @@ class GameWindow < Gosu::Window
       end
     end
     @player = Player.new(400, 340)
+    @tru_false = Gosu::Font.new(20)
+    @message = ""
+    @map_array.each {|item| puts "Item X => #{item.x} Item Y => #{item.y}"}
 
   end
 
   def update
-    @map_array.each do |item|
-      #something goes in here to work.
-    end
+    @message = nil
+    @map_array.each {|item| @message = true if item.solid?(@player.x, @player.y)}
   end
 
   def draw
@@ -29,20 +31,26 @@ class GameWindow < Gosu::Window
       item.draw
     end
     @player.draw
+    @tru_false.draw(@message, 10, 30, FONT_COLOR)
+    @tru_false.draw("Player x => #{@player.x} Player Y => #{@player.y}", 10, 60, FONT_COLOR)
   end
 
   def button_down(id)
-    case id
-      when Gosu::KbUp
-        @player.up
-      when Gosu::KbDown
-        @player.down
-      when Gosu::KbLeft
-        @player.west
-      when Gosu::KbRight
-        @player.east
+     future_spot = false
+     case id
+       when Gosu::KbUp
+         @map_array.each {|item| future_spot = true if item.solid?(@player.x, @player.y - 20)}
+         @player.up if future_spot == false
+       when Gosu::KbDown
+         @map_array.each {|item| future_spot = true if item.solid?(@player.x, @player.y + 20)}
+         @player.down if future_spot == false
+       when Gosu::KbLeft
+         @map_array.each {|item| future_spot = true if item.solid?(@player.x - 20, @player.y)}
+         @player.west if future_spot == false
+       when Gosu::KbRight
+         @map_array.each {|item| future_spot = true if item.solid?(@player.x + 20, @player.y)}
+         @player.east if future_spot == false
     end
-
   end
 
 end
@@ -78,19 +86,19 @@ class Player
   end
 
   def up
-    @y -= 20.0
+    @y -= 20
   end
 
   def east
-    @x += 20.0
+    @x += 20
   end
 
   def west
-    @x -= 20.0
+    @x -= 20
   end
 
   def down
-    @y += 20.0
+    @y += 20
   end
 
   def draw
