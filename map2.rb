@@ -43,10 +43,24 @@ class Map
   end
 
   def solid?(x, y)
-    return_value = false
+    tru_false = false
     @array.each do |item|
       #check for solid
+      if (item[:x]/20 == x/20 && item[:y]/20 == y/20)
+        tru_false = true
+      elsif x + 20 == 660
+        tru_false = true
+      elsif x - 20 == -40
+        tru_false = true
+      elsif y - 20 == -40
+        tru_false = true
+      elsif y + 20 == 500
+        tru_false = true
+      else
+        tru_false = false
+      end
     end
+    return tru_false
   end
 end
 
