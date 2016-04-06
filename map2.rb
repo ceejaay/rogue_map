@@ -5,7 +5,6 @@ class GameWindow < Gosu::Window
   def initialize
     super 640, 480
     self.caption = "Rogue"
-
     @map = Map.new("media/map.txt")
     @player = Player.new(0, 0)
   end
