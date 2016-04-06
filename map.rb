@@ -51,28 +51,37 @@ class GameWindow < Gosu::Window
 end
 
 class Map
-  attr_accessor :x, :y, :icon, :tile
-  def initialize(x, y)
-    @x = x
-    @y = y
-    @icon = icon
-    @tile = Gosu::Image.new("media/wall.png")
+  attr_accessor :array
+  def initialize(file)
+    raw_map = File.readlines(file).map {|lines| lines.chomp.split(//)}
+    self.array = []
+    raw_map.each_with_index do |value0, index0|
+      value0.each_with_index do |value1, index1|
+        if value1 == "#"
+          self.array << {:x => index1 * 20, :y => index0 *20}
+        end
+      end
+    end
   end
 
   def solid?(x, y)
-    if (@x/20 == x/20 && @y/20 == y/20)
-      return true
+    tru_false = false
+    @array.each do |item|
+      if (item[:x]/20 == x/20 && item[:y]/20 == y/20)
+        tru_false = true
     elsif x + 20 == 660
-      return true
+      tru_false = true
     elsif x - 20 == -40
-      return true
+      tru_false = true
     elsif y - 20 == -40
-      return true
+      tru_false = true
     elsif y + 20 == 500
-      return true
+      tru_false = true
     else
-      return false
+      tru_false = false
     end
+    end
+    return tru_false
   end
 
   def draw
