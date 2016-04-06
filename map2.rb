@@ -7,7 +7,7 @@ class GameWindow < Gosu::Window
     self.caption = "Rogue"
 
     @map = Map.new("media/map.txt")
-    #@player = Player.new(0, 0)
+    @player = Player.new(0, 0)
   end
 
   def update
@@ -15,10 +15,40 @@ class GameWindow < Gosu::Window
 
   def draw
     @map.draw
+    @player.draw
   end
 
   def button_down(id)
     #button down code
+  end
+end
+
+class Player
+  attr_accessor :x, :y
+  def initialize(x, y)
+    @image = Gosu::Font.new(20)
+    @x = x
+    @y = y
+  end
+
+  def up
+    @y -= 20
+  end
+
+  def right
+    @x += 20
+  end
+
+  def left
+    @x -= 20
+  end
+
+  def down
+    @y += 20
+  end
+
+  def draw
+    @image.draw("@", @x, @y, FONT_COLOR)
   end
 end
 
