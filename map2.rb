@@ -7,18 +7,34 @@ class GameWindow < Gosu::Window
     self.caption = "Rogue"
     @map = Map.new("media/map.txt")
     @player = Player.new(0, 0)
+    @text = ""
+    @message = Gosu::Font.new(20)
   end
 
   def update
+    if @map.solid?(@player.x, @player.y)
+        @text = "Solid"
+      else
+        @text = "Not solid"
+      end
   end
 
   def draw
+    @message.draw(@text, 10, 30, FONT_COLOR)
     @map.draw
     @player.draw
   end
 
   def button_down(id)
-    #button down code
+    if id == Gosu::KbRight    #button down code
+      @player.right
+    elsif id == Gosu::KbLeft
+      @player.left
+    elsif id == Gosu::KbUp
+      @player.up
+    elsif id == Gosu::KbDown
+      @player.down
+    end
   end
 end
 
