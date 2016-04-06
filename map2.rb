@@ -15,7 +15,6 @@ class GameWindow < Gosu::Window
 
   def draw
     @map.draw
-    #draw code
   end
 
   def button_down(id)
@@ -39,7 +38,14 @@ class Map
   end
   def draw
     @array.each do |item|
-      item[:sprite].draw(item[:x], item[:y], 3)
+      item[:sprite].draw(item[:x], item[:y], 1)
+    end
+  end
+
+  def solid?(x, y)
+    return_value = false
+    @array.each do |item|
+      #check for solid
     end
   end
 end
