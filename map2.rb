@@ -7,33 +7,38 @@ class GameWindow < Gosu::Window
     self.caption = "Rogue"
     @map = Map.new("media/map.txt")
     @player = Player.new(0, 0)
-    @text = ""
+    @text = nil
     @message = Gosu::Font.new(20)
   end
 
   def update
-    if @map.solid?(@player.x, @player.y)
-        @text = "Solid"
-      else
-        @text = "Not solid"
-      end
+#testing code
+    @map.array.each do |item|
+      if [item[:x], item[:y]] == [@player.x - 20, @player.y]
+        @text = true
+       else
+         @text = false
+       end
+    end
   end
 
+
   def draw
-    @message.draw(@text, 10, 30, FONT_COLOR)
+    @message.draw("Solid => #{@map.solid?(@player.x + 20, @player.y)}", 10, 30, FONT_COLOR)
+    @message.draw(@text, 10, 60, FONT_COLOR)
     @map.draw
     @player.draw
   end
 
   def button_down(id)
-    if id == Gosu::KbRight    #button down code
-      @player.right
+    if id == Gosu::KbRight
+      @player.right if  @map.solid?(@player.x + 20, @player.y) == false
     elsif id == Gosu::KbLeft
-      @player.left
+      @player.left unless @map.solid?(@player.x - 20, @player.y)
     elsif id == Gosu::KbUp
-      @player.up
+      @player.up unless @map.solid?(@player.x, @player.y - 20)
     elsif id == Gosu::KbDown
-      @player.down
+      @player.down unless @map.solid?(@player.x, @player.y + 20)
     end
   end
 end
@@ -81,6 +86,7 @@ class Map
       end
     end
   end
+
   def draw
     @array.each do |item|
       item[:sprite].draw(item[:x], item[:y], 1)
@@ -91,8 +97,12 @@ class Map
     tru_false = false
     @array.each do |item|
       #check for solid
-      if (item[:x]/20 == x/20 && item[:y]/20 == y/20)
+     if [item[:x], item[:y]] == [x, y]
+     # if (item[:x]/20 == x/20 && item[:y]/20 == y/20)
         tru_false = true
+      else
+        tru_false = false
+=begin
       elsif x + 20 == 660
         tru_false = true
       elsif x - 20 == -40
@@ -104,6 +114,8 @@ class Map
       else
         tru_false = false
       end
+=end
+    end
     end
     return tru_false
   end
