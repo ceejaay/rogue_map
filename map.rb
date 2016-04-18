@@ -6,17 +6,23 @@ class GameWindow < Gosu::Window
   def initialize
     super 640, 480
     self.caption = "Rogue"
-    raw_map = File.readlines("media/text_map.txt").map {|lines| lines.chomp.split(//)}
+    #raw_map = File.readlines("media/text_map.txt").map {|lines| lines.chomp.split(//)}
     @map_array = []
-    raw_map.each_with_index do |value0, index0|
+    @player = Player.new(400, 340)
+    x = MapMaker.new
+    x.square
+    @tru_false = Gosu::Font.new(20)
+    self.map_convert(x.array)
+  end
+
+  def map_convert(map_array)
+    map_array.each_with_index do |value0, index0|
       value0.each_with_index do |value1, index1|
         if value1 == "#"
           @map_array << Map.new((index1 * 20), (index0 * 20))
         end
       end
     end
-    @player = Player.new(400, 340)
-    @tru_false = Gosu::Font.new(20)
   end
 
   def update
@@ -79,18 +85,6 @@ class Map
   def draw
     @tile.draw(@x, @y, 1)
   end
-
-  def prep_map(file_name)
-    raw_map = File.readlines("media/text_map.txt").map {|lines| lines.chomp.split(//)}
-    raw_map.each_with_index do |value0, index0|
-      value0.each_with_index do |value1, index1|
-        if value1 == "#"
-          return self.new((index1 * 20), (index0 * 20))
-        end
-      end
-    end
-  end
-
 end
 
 class Player
@@ -121,5 +115,27 @@ class Player
     @image.draw("@", @x, @y, FONT_COLOR)
   end
 end
+
+class MapMaker
+  attr_accessor :array, :x0, :x1, :y0, :y1
+  def initialize
+    @array
+    @x0 = rand(31)
+    @x1 = rand(@x0 .. 31)
+    @y0 = rand(23)
+    @y1 = rand(@y0 .. 23)
+    self.array = Array.new(24){Array.new(32) {"#"}}
+  end
+
+  def square
+    (@y0 .. @y1).to_a.each do |item|
+      (@x0 .. @x1).to_a.each do |array_item|
+        @array[item][array_item] = " "
+      end
+    end
+  end
+end
+
+#this runs the game
 window = GameWindow.new
 window.show
