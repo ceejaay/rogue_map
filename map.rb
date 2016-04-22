@@ -10,7 +10,6 @@ class GameWindow < Gosu::Window
     @map_array = []
     @player = Player.new(400, 340)
     x = MapMaker.new
-    x.square
     @tru_false = Gosu::Font.new(20)
     self.map_convert(x.array)
   end
