@@ -7,11 +7,12 @@ class GameWindow < Gosu::Window
     super 640, 480
     self.caption = "Rogue"
     @map_array = []
-    @player = Player.new(400, 340)
+    @player = Player.new#(400, 340)
     x = MapMaker.new
     x.square!.new_coordinates!.square!.new_coordinates!.square!
     @tru_false = Gosu::Font.new(20)
     self.map_convert(x.array)
+    @player.starting_point(@map_array)
   end
 
   def map_convert(map_array)
@@ -88,7 +89,7 @@ end
 
 class Player
   attr_accessor :x, :y
-  def initialize(x, y)
+  def initialize(x=0, y=0)
     @image = Gosu::Font.new(20)
     @x = x
     @y = y
@@ -113,6 +114,18 @@ class Player
   def draw
     @image.draw("@", @x, @y, FONT_COLOR)
   end
+
+  def starting_point(map_array)
+    map_array.each do |item|
+      if [@x, @y] == [item.x, item.y]
+        self.east
+        self.down
+      end
+    end
+    #pick some coordinates
+    #check the map array for those coordinates. if they match pick another set of numbers.
+  end
+
 end
 
 class MapMaker
