@@ -9,7 +9,7 @@ class GameWindow < Gosu::Window
     @map_array = []
     @player = Player.new(400, 340)
     x = MapMaker.new
-    x.square
+    x.square!.new_coordinates!.square!.new_coordinates!.square!
     @tru_false = Gosu::Font.new(20)
     self.map_convert(x.array)
   end
@@ -126,13 +126,23 @@ class MapMaker
     self.array = Array.new(24){Array.new(32) {"#"}}
   end
 
-  def square
+  def square!
     (@y0 .. @y1).to_a.each do |item|
       (@x0 .. @x1).to_a.each do |array_item|
         @array[item][array_item] = " "
       end
     end
+    return self
   end
+
+  def new_coordinates!
+    @x0 = rand(31)
+    @x1 = rand(@x0 .. 31)
+    @y0 = rand(23)
+    @y1 = rand(@y0 .. 23)
+    return self
+  end
+
 end
 
 #this runs the game
