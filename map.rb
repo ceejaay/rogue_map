@@ -1,15 +1,15 @@
+#for Garrett
 require 'gosu'
 FONT_COLOR = 0xff_ffff00
 
-#what do comments say
 class GameWindow < Gosu::Window
   def initialize
     super 640, 480
     self.caption = "Rogue"
-    #raw_map = File.readlines("media/text_map.txt").map {|lines| lines.chomp.split(//)}
     @map_array = []
     @player = Player.new(400, 340)
     x = MapMaker.new
+    x.square
     @tru_false = Gosu::Font.new(20)
     self.map_convert(x.array)
   end
